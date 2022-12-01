@@ -112,30 +112,42 @@ sudo chown -R 1000:1000 data/
 ApacheのアクセスログがElasticsearchに連携されていることを確認する
 
 kibana画面から「Management」>「Index Management」を選択し、「access\_log」というインデックスが存在することを確認する。
+![image](https://user-images.githubusercontent.com/73123382/205113717-8fe77e51-7a14-4c2d-9ae2-4fc774c662cb.png)
 
 10.インデックスパターン作成
 
 kibana画面から「Management」>「Index Patterns」> 「Create Index Pattern」を選択する
+![image](https://user-images.githubusercontent.com/73123382/205113873-8aa56217-3f9d-4ef8-8ffe-bf11f51d3955.png)
 
-「Index Patterns」欄に「access\_log」と入力し、「Next Step」を選択する。
+
+「Index Patterns」欄に「access_log」と入力し、「Next Step」を選択する。
+![image](https://user-images.githubusercontent.com/73123382/205114060-8efd2a3d-3395-401a-9486-565bca9dd57e.png)
+
 
 「Time Filter field nam」欄に「@timestamp」を選択し、「Create Index Pattern」を選択する。
+![image](https://user-images.githubusercontent.com/73123382/205114140-928528b2-e1b6-4a39-8d21-783c22ab6fa0.png)
+
 
 11.連携データ確認
 
 kibana画面から「Discover」を選択し、連携されたアクセスログの内容を確認する。
+![image](https://user-images.githubusercontent.com/73123382/205114376-bfb7c41c-3cdf-4e38-bc12-57df2a4ce901.png)
+
 
 12.グラフ作成
 
 kibana画面から「Visualize」>「Create New Visualization」>「Horizonal Bar」>「access.log」を選択
+![image](https://user-images.githubusercontent.com/73123382/205114565-d756a465-7712-4b73-82bd-402b436f6134.png)
+
 
 「Bucket」項目の「add」>「Split Chart」を選択する。
 
 「Agrregation」：「Terms」
 
-「Field」:「apache.access.remote\_ip.keyword」を選択し、「▷」をクリックする。
+「Field」:「apache.access.remote_ip.keyword」を選択し、「▷」をクリックする。
 
 グラフが表示されることを確認する。
+![image](https://user-images.githubusercontent.com/73123382/205114979-de7aff85-69ea-4d85-ba3b-3784869d5318.png)
 
 
 参考サイト
