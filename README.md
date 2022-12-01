@@ -64,6 +64,19 @@ Creating wordpress     ... done
 docker ps
 ```
 
+もしESが再起動を繰り返して以下のようなログが出ている場合、docker-cmposeを起動したディレクトリで以下コマンドを実行する
+
+エラー
+
+```
+elasticsearch1    | "stacktrace": ["org.elasticsearch.bootstrap.StartupException: ElasticsearchException[failed to bind service]; nested: AccessDeniedException[/usr/share/elasticsearch/data/nodes];",
+```
+
+実行コマンド
+```
+sudo chown -R 1000:1000 data/
+```
+
 7.Wordpressインストール
 
 以下のURLからwordpressにログインし、初期設定する
