@@ -82,6 +82,8 @@ docker ps
 
 画面下の「サイト名へ移動」を選択し、作成したサイトにログインする
 
+![image](https://user-images.githubusercontent.com/73123382/205108297-3316c8da-515e-4cb8-9c37-8359a18e8c01.png)
+
 8.Apacheのアクセスログの更新確認
 
 エクスプローラーを開き、docker-composeを実行したディレクトリ配下にあるApacheのアクセスログが更新されていることを確認する。
