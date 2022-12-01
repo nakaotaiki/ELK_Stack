@@ -86,7 +86,7 @@ docker ps
 
 エクスプローラーを開き、docker-composeを実行したディレクトリ配下にあるApacheのアクセスログが更新されていることを確認する。
 
-「\ELK2\data\apache2\access.log」
+・data\apache2\access.log
 
 9.kibanaでデータ連携確認
 
