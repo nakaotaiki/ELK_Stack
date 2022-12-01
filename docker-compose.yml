@@ -1,0 +1,87 @@
+version: "3"
+
+services:
+  elasticsearch:
+    build: ./elasticsearch/
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - node.name=elasticsearch
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./data/es:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - elasticstack
+    restart: always
+    
+  kibana:
+    build: ./kibana/
+    container_name: kibana
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+    ports:
+      - 5601:5601
+    networks:
+      - elasticstack
+    restart: always 
+
+  logstash:
+    build: ./logstash/
+    container_name: logstash
+    volumes:
+      - ./logstash/pipeline/:/usr/share/logstash/pipeline/
+      - ./logstash/config/:/usr/share/logstash/config/
+      - ./data/apache2:/var/log/apache2/
+    networks:
+      - elasticstack
+    restart: always
+
+  wordpress:
+     mem_limit: 256m
+     container_name: wordpress
+     image: wordpress:latest
+     depends_on:
+       - db
+       - logstash
+     ports:
+       - "8000:80"
+     restart: always
+     environment:
+       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_USER: wordpress
+       WORDPRESS_DB_PASSWORD: wordpress
+       WORDPRESS_DB_NAME: wordpress
+     volumes:
+       - ./html:/var/www/html
+       - ./data/apache2:/var/log/apache2/
+ 
+  db:
+     mem_limit: 256m
+     container_name: mysql
+     image: mysql:5.7
+     volumes:
+       - db_data:/var/lib/mysql
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: root
+       MYSQL_DATABASE: wordpress
+       MYSQL_USER: wordpress
+       MYSQL_PASSWORD: wordpress
+       
+    
+volumes:
+ db_data:
+ elasticstack:
+  external: true
+
+networks:
+ elasticstack:
+  external: true
